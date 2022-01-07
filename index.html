@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>upload image</title>
+</head>
+<body>
+<p>Select a File to Load:</p>
+<input id="inputFileToLoad" type="file"/>
+<p>File Contents as DataURL:</p>
+<textarea id="textAreaFileContents" style="width:640;height:240"></textarea>
+<p>OCR</p>
+<input type="submit" onclick="uploadPicture();" value="OCR"/>
+<div id="text"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript">
+
+	function uploadPicture() {
+		//Prepare form data
+		var formData = new FormData();
+		formData.append("txtfoto", $("#inputFileToLoad")[0].files[0]);
+		callService(formData);
+	}
+
+	function callService(formData) {
+		$.ajax({
+			url: "http://localhost/js/upload_image/api_upload.php",
+			method: "POST",
+			data: formData,
+			cache: "false",
+			contentType: false,
+			processData: false,
+			dataType: 'json',
+			success: function (x) {
+				console.log(x);
+			}
+		});
+	}
+</script>
+</body>
+</html>
